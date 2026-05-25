@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Планировщик задач для финансиста</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="workspace" aria-label="Планировщик задач">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Помощник финансиста</p>
+            <h1>Планировщик задач</h1>
+          </div>
+
+          <div class="period-control" aria-label="Быстрые списки задач">
+            <button class="period-button" type="button" data-report="Незавершенные">Незавершенные</button>
+            <button class="period-button" type="button" data-report="Дедлайн">Дедлайн</button>
+            <button class="period-button" type="button" data-report="На сегодня">На сегодня</button>
+          </div>
+        </header>
+
+        <section class="dated-period" aria-label="Датированный период">
+          <label class="field">
+            <span>Начало периода</span>
+            <input id="periodStart" type="date" />
+          </label>
+          <label class="field">
+            <span>Окончание периода</span>
+            <input id="periodEnd" type="date" />
+          </label>
+          <label class="field period-note-field">
+            <span>Комментарий к периоду</span>
+            <input id="periodNote" type="text" placeholder="Например: бюджетный цикл, закрытие месяца" />
+          </label>
+          <div class="period-shift" aria-label="Переключение периода">
+            <button id="previousPeriodButton" class="period-shift-button" type="button" aria-label="Предыдущий период">←</button>
+            <button id="nextPeriodButton" class="period-shift-button" type="button" aria-label="Следующий период">→</button>
+          </div>
+        </section>
+
+        <section class="setup-panel" aria-label="Настройка проектов">
+          <label class="field project-count-field">
+            <span>Количество проектов</span>
+            <input
+              id="projectCount"
+              type="number"
+              min="0"
+              max="24"
+              value="3"
+              inputmode="numeric"
+              aria-describedby="projectHint"
+            />
+          </label>
+          <p id="projectHint" class="hint">Блоки проектов обновляются автоматически после изменения числа.</p>
+        </section>
+
+        <section class="summary" aria-label="Сводка">
+          <div>
+            <span class="summary-label">Даты</span>
+            <strong id="periodDates">Не указаны</strong>
+          </div>
+          <div>
+            <span class="summary-label">Проекты</span>
+            <strong id="projectTotal">3</strong>
+          </div>
+          <div>
+            <span class="summary-label">Выполнено</span>
+            <strong id="doneTotal">0 из 0</strong>
+            <span class="summary-progress" aria-hidden="true">
+              <span id="doneProgressBar"></span>
+            </span>
+          </div>
+        </section>
+
+        <section class="task-entry" aria-label="Добавление задачи">
+          <label class="field task-text-field">
+            <span>Новая задача</span>
+            <input id="taskText" type="text" placeholder="Например: сверить платежный календарь" />
+          </label>
+
+          <label class="field project-select-field">
+            <span>Проект</span>
+            <select id="projectSelect"></select>
+          </label>
+
+          <label class="field task-deadline-field">
+            <span>Дедлайн задачи</span>
+            <input id="taskDeadline" type="date" />
+          </label>
+
+          <button id="addTaskButton" class="primary-button" type="button">Добавить задачу</button>
+        </section>
+
+        <section id="projectsGrid" class="projects-grid" aria-label="Проекты"></section>
+      </section>
+    </main>
+
+    <aside id="periodDrawer" class="period-drawer" aria-label="Список задач" aria-hidden="true">
+      <header class="period-drawer-header">
+        <div>
+          <span class="summary-label">Список задач</span>
+          <h2 id="drawerTitle">Задачи</h2>
+          <p id="drawerDates" class="drawer-dates">Все проекты</p>
+        </div>
+        <button id="closeDrawerButton" class="drawer-close-button" type="button" aria-label="Закрыть">×</button>
+      </header>
+
+      <div id="drawerTaskList" class="drawer-task-list"></div>
+    </aside>
+
+    <script src="app.js"></script>
+  </body>
+</html>
